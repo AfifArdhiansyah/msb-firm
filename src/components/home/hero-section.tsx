@@ -17,6 +17,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
+import TypingAnimation from '@/components/ui/typing-animation';
+import GridPattern from '@/components/ui/grid-pattern';
+import Particles from '@/components/ui/particles';
+import MagneticButton from '@/components/ui/magnetic-button';
 
 export default function HeroSection() {
   const featuredTestimonials = testimonials.filter((t) => t.is_featured);
@@ -66,6 +70,8 @@ export default function HeroSection() {
         />
       </div>
       <div className="absolute inset-0 bg-black/60" />
+      <GridPattern className="absolute inset-0 opacity-10" />
+      <Particles count={30} className="opacity-20" />
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-20">
@@ -77,7 +83,11 @@ export default function HeroSection() {
             className="space-y-6"
           >
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white">
-              Mitra Hukum Profesional untuk{' '}
+              <TypingAnimation 
+                text="Mitra Hukum Profesional untuk"
+                duration={1500}
+                className="inline"
+              />{' '}
               <motion.span
                 key={currentWordIndex}
                 initial={{ opacity: 0, y: 20 }}
@@ -100,26 +110,30 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex flex-col sm:flex-row gap-3 mt-8 justify-center"
           >
-            <Button
-              asChild
-              size="default"
-              className="bg-white text-red-600 hover:bg-red-50 px-6 py-3"
-            >
-              <Link href="/kontak" className="flex items-center space-x-2">
-                <span>Konsultasi Gratis</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="default"
-              className="border border-white/50 bg-transparent text-white hover:bg-white hover:text-red-600 px-6 py-3"
-            >
-              <Link href="/layanan">
-                <span>Layanan Kami</span>
-              </Link>
-            </Button>
+            <MagneticButton>
+              <Button
+                asChild
+                size="default"
+                className="bg-white text-red-600 hover:bg-red-50 hover:scale-105 transition-all duration-300 px-6 py-3 shadow-lg hover:shadow-xl"
+              >
+                <Link href="/kontak" className="flex items-center space-x-2">
+                  <span>Konsultasi Gratis</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </MagneticButton>
+            <MagneticButton>
+              <Button
+                asChild
+                variant="outline"
+                size="default"
+                className="border border-white/50 bg-transparent text-white hover:bg-white hover:text-red-600 hover:scale-105 transition-all duration-300 px-6 py-3"
+              >
+                <Link href="/layanan">
+                  <span>Layanan Kami</span>
+                </Link>
+              </Button>
+            </MagneticButton>
           </motion.div>
         </div>
       </div>

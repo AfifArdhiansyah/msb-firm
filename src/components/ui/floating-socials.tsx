@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Instagram, Twitter, MessageCircle } from 'lucide-react';
+import { MessageCircle, Mail } from 'lucide-react';
 import { firmInfo } from '@/lib/dummy-data';
 
 export default function FloatingSocials() {
@@ -12,24 +12,17 @@ export default function FloatingSocials() {
   const socials = [
     {
       label: 'WhatsApp',
-      href: waNumber ? `https://wa.me/${waNumber}` : '#',
+      href: waNumber ? `https://wa.me/${waNumber}` : 'https://wa.me/6281272519788',
       icon: MessageCircle,
       color: 'text-green-400',
       hover: 'hover:bg-green-500/20',
     },
     {
-      label: 'Twitter',
-      href: 'https://twitter.com', // TODO: ganti dengan akun Anda
-      icon: Twitter,
-      color: 'text-sky-400',
-      hover: 'hover:bg-sky-500/20',
-    },
-    {
-      label: 'Instagram',
-      href: 'https://instagram.com', // TODO: ganti dengan akun Anda
-      icon: Instagram,
-      color: 'text-pink-400',
-      hover: 'hover:bg-pink-500/20',
+      label: 'Email',
+      href: 'mailto:corporate.legal3@panusa-indo.com',
+      icon: Mail,
+      color: 'text-blue-400',
+      hover: 'hover:bg-blue-500/20',
     },
   ];
 
