@@ -2,57 +2,42 @@
 
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Linkedin, Mail, Award, GraduationCap, Phone, MapPin } from 'lucide-react';
-import { teamMembers } from '@/lib/dummy-data';
+import { Mail, Award, GraduationCap, Phone, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { teamMembers } from '@/lib/dummy-data';
 
-// Extended team data with additional information
-const extendedTeamData = [
-  {
-    ...teamMembers[0],
-    level: 'Direksi',
-    education: ['S.H. Universitas Indonesia', 'M.H. Universitas Gadjah Mada', 'Ph.D. Harvard Law School'],
-    achievements: ['Best Corporate Lawyer 2023', 'Indonesia Legal Awards Winner', 'Certified Arbitrator'],
-    experience: '25+ tahun',
-    cases: '200+ kasus',
-    phone: '+62-21-1234-5678 ext. 101',
-    office: 'Lantai 15, Ruang 1501'
-  },
-  {
-    ...teamMembers[1],
-    level: 'Partner',
-    education: ['S.H. Universitas Padjadjaran', 'LL.M. Harvard Law School'],
-    achievements: ['Top Litigator 2022', 'International Arbitration Certified', 'Women in Law Award'],
-    experience: '18+ tahun',
-    cases: '150+ kasus',
-    phone: '+62-21-1234-5678 ext. 102',
-    office: 'Lantai 14, Ruang 1401'
-  },
-  {
-    ...teamMembers[2],
-    level: 'Partner',
-    education: ['S.H. Universitas Trisakti', 'M.Kn. Universitas Indonesia'],
-    achievements: ['Property Law Expert', 'Real Estate Legal Advisor', 'APPRAISAL Certified'],
-    experience: '15+ tahun',
-    cases: '300+ transaksi',
-    phone: '+62-21-1234-5678 ext. 103',
-    office: 'Lantai 14, Ruang 1402'
-  },
-  {
-    ...teamMembers[3],
-    level: 'Associate',
-    education: ['S.H. Universitas Airlangga'],
-    achievements: ['Family Law Specialist', 'Certified Mediator', 'Child Protection Advocate'],
-    experience: '8+ tahun',
-    cases: '100+ kasus',
-    phone: '+62-21-1234-5678 ext. 201',
-    office: 'Lantai 13, Ruang 1301'
-  }
-];
+// Extended team data with additional information for display
+const extendedTeamData = teamMembers.map(member => ({
+  ...member,
+  level: member.position === 'Managing Partner' ? 'Direksi' : 
+         member.position?.includes('Partner') ? 'Partner' : 
+         member.position === 'Associate' ? 'Associate' : 'Staff',
+  image_url: member.image_url || `https://images.unsplash.com/photo-${Math.random() > 0.5 ? '1507003211169-0a1dd7228f2d' : '1494790108755-2616b612b786'}?w=300&h=300&fit=crop&crop=face`,
+  education: [
+    'S.H. Universitas Indonesia',
+    member.position?.includes('Partner') ? 'LL.M. Harvard Law School' : 'M.H. Universitas Indonesia'
+  ],
+  achievements: [
+    'Legal Expert',
+    member.position?.includes('Partner') ? 'Leading Individual' : 'Certified Professional',
+    'Outstanding Achievement Award'
+  ],
+  experience: member.position === 'Managing Partner' ? '25+ tahun' :
+              member.position?.includes('Senior Partner') ? '18+ tahun' :
+              member.position?.includes('Partner') ? '15+ tahun' :
+              member.position === 'Associate' ? '10+ tahun' : '5+ tahun',
+  cases: member.position === 'Managing Partner' ? '500+ kasus' :
+         member.position?.includes('Senior Partner') ? '400+ kasus' :
+         member.position?.includes('Partner') ? '300+ kasus' :
+         member.position === 'Associate' ? '200+ kasus' : '100+ kasus',
+  phone: '+62-21-1234-5678 ext. ' + (100 + member.id),
+  office: `Lantai ${15 - Math.floor(member.id / 4)}, Ruang ${1400 + member.id}`
+}));
+
 
 // Group team members by level
 const teamByLevel = extendedTeamData.reduce((acc, member) => {
@@ -104,7 +89,7 @@ export default function TeamGrid() {
                 <h3 className="text-2xl font-bold text-slate-900 mb-8 text-center">
                   {level}
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="flex flex-wrap justify-center gap-6">
                   {members.map((member, index) => (
                     <motion.div
                       key={member.id}
@@ -114,29 +99,33 @@ export default function TeamGrid() {
                       viewport={{ once: true }}
                     >
                       <Card 
-                        className="cursor-pointer hover:shadow-lg transition-all duration-300 border-0 shadow-md"
+                        className="cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-0 shadow-md bg-white overflow-hidden group w-64"
                         onClick={() => setSelectedMember(member)}
                       >
-                        <CardContent className="p-6 text-center">
-                          <Avatar className="w-20 h-20 mx-auto mb-4">
-                            <AvatarImage 
+                        <CardContent className="p-0">
+                          {/* Profile Image */}
+                          <div className="relative h-48 bg-gradient-to-br from-red-50 to-red-100">
+                            <Image 
                               src={member.image_url} 
                               alt={member.name}
-                              className="object-cover"
+                              width={300}
+                              height={300}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             />
-                            <AvatarFallback className="bg-red-100 text-red-700 text-xl font-bold">
-                              {member.name.split(' ').map(n => n[0]).join('')}
-                            </AvatarFallback>
-                          </Avatar>
-                          <h4 className="font-semibold text-slate-900 mb-2 text-sm">
-                            {member.name}
-                          </h4>
-                          <p className="text-red-600 font-medium text-xs mb-2">
-                            {member.position}
-                          </p>
-                          <p className="text-slate-600 text-xs">
-                            {member.specialization}
-                          </p>
+                          </div>
+                          
+                          {/* Content */}
+                          <div className="p-4">
+                            <h4 className="font-bold text-slate-900 mb-1 text-sm leading-tight">
+                              {member.name}
+                            </h4>
+                            <p className="text-red-600 font-semibold text-xs mb-2">
+                              {member.position}
+                            </p>
+                            <p className="text-slate-600 text-xs leading-relaxed">
+                              {member.specialization}
+                            </p>
+                          </div>
                         </CardContent>
                       </Card>
                     </motion.div>
@@ -149,7 +138,7 @@ export default function TeamGrid() {
 
         {/* Member Detail Dialog */}
         <Dialog open={!!selectedMember} onOpenChange={() => setSelectedMember(null)}>
-          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             {selectedMember && (
               <>
                 <DialogHeader>
@@ -160,31 +149,28 @@ export default function TeamGrid() {
                 
                 <div className="space-y-6">
                   {/* Header Info */}
-                  <div className="flex flex-col md:flex-row md:items-start space-y-4 md:space-y-0 md:space-x-6">
-                    <Avatar className="w-24 h-24 mx-auto md:mx-0">
-                      <AvatarImage 
-                        src={selectedMember.image_url} 
-                        alt={selectedMember.name}
-                        className="object-cover"
-                      />
-                      <AvatarFallback className="bg-red-100 text-red-700 text-2xl font-bold">
-                        {selectedMember.name.split(' ').map(n => n[0]).join('')}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="text-center md:text-left">
+                  <div className="flex flex-col gap-2 md:flex-row md:items-start space-y-4 md:space-y-0 md:space-x-6">
+                    <Image 
+                      src={selectedMember.image_url} 
+                      alt={selectedMember.name}
+                      width={128}
+                      height={128}
+                      className="w-32 h-32 rounded-full object-cover mx-auto md:mx-0 border-4 border-red-100"
+                    />
+                    <div className="text-center md:text-left flex-1">
                       <Badge variant="secondary" className="mb-2">
                         {selectedMember.position}
                       </Badge>
-                      <p className="text-red-600 font-medium mb-2">
+                      <p className="text-red-600 font-medium mb-4">
                         {selectedMember.specialization}
                       </p>
                       <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <span className="font-semibold text-slate-900">{selectedMember.experience}</span>
+                        <div className="bg-slate-50 p-3 rounded-lg">
+                          <span className="font-semibold text-slate-900 block">{selectedMember.experience}</span>
                           <p className="text-slate-500">Pengalaman</p>
                         </div>
-                        <div>
-                          <span className="font-semibold text-slate-900">{selectedMember.cases}</span>
+                        <div className="bg-slate-50 p-3 rounded-lg">
+                          <span className="font-semibold text-slate-900 block">{selectedMember.cases}</span>
                           <p className="text-slate-500">Ditangani</p>
                         </div>
                       </div>
@@ -233,21 +219,21 @@ export default function TeamGrid() {
                   {/* Contact Info */}
                   <div>
                     <h4 className="font-semibold text-slate-900 mb-3">Kontak</h4>
-                    <div className="space-y-2 text-sm">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                       {selectedMember.email && (
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2 p-3 bg-slate-50 rounded-lg">
                           <Mail className="h-4 w-4 text-slate-500" />
                           <span className="text-slate-600">{selectedMember.email}</span>
                         </div>
                       )}
                       {selectedMember.phone && (
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2 p-3 bg-slate-50 rounded-lg">
                           <Phone className="h-4 w-4 text-slate-500" />
                           <span className="text-slate-600">{selectedMember.phone}</span>
                         </div>
                       )}
                       {selectedMember.office && (
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2 p-3 bg-slate-50 rounded-lg">
                           <MapPin className="h-4 w-4 text-slate-500" />
                           <span className="text-slate-600">{selectedMember.office}</span>
                         </div>
@@ -257,24 +243,6 @@ export default function TeamGrid() {
 
                   {/* Action Buttons */}
                   <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100">
-                    {selectedMember.linkedin_url && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        asChild
-                        className="hover:bg-red-50 hover:border-red-300 flex-1"
-                      >
-                        <a
-                          href={selectedMember.linkedin_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center space-x-2"
-                        >
-                          <Linkedin className="h-4 w-4" />
-                          <span>LinkedIn</span>
-                        </a>
-                      </Button>
-                    )}
                     {selectedMember.email && (
                       <Button
                         variant="outline"
