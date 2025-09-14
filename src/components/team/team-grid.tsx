@@ -13,7 +13,7 @@ import { teamMembers } from '@/lib/dummy-data';
 // Extended team data with additional information for display
 const extendedTeamData = teamMembers.map(member => ({
   ...member,
-  level: member.position === 'Managing Partner' ? 'Direksi' : 
+  level: member.position === 'Managing Partner' ? 'Managing Partner' : 
          member.position?.includes('Partner') ? 'Partner' : 
          member.position === 'Associate' ? 'Associate' : 'Staff',
   image_url: member.image_url || `https://images.unsplash.com/photo-${Math.random() > 0.5 ? '1507003211169-0a1dd7228f2d' : '1494790108755-2616b612b786'}?w=300&h=300&fit=crop&crop=face`,
@@ -34,7 +34,7 @@ const extendedTeamData = teamMembers.map(member => ({
          member.position?.includes('Senior Partner') ? '400+ kasus' :
          member.position?.includes('Partner') ? '300+ kasus' :
          member.position === 'Associate' ? '200+ kasus' : '100+ kasus',
-  phone: '+62-21-1234-5678 ext. ' + (100 + member.id),
+  phone: '+62-821-1234-5678 ',
   office: `Lantai ${15 - Math.floor(member.id / 4)}, Ruang ${1400 + member.id}`
 }));
 
@@ -48,7 +48,7 @@ const teamByLevel = extendedTeamData.reduce((acc, member) => {
   return acc;
 }, {} as Record<string, typeof extendedTeamData>);
 
-const levelOrder = ['Direksi', 'Partner', 'Associate', 'Staff'];
+const levelOrder = ['Managing Partner', 'Partner', 'Associate', 'Staff'];
 
 export default function TeamGrid() {
   const [selectedMember, setSelectedMember] = useState<typeof extendedTeamData[0] | null>(null);
@@ -99,30 +99,27 @@ export default function TeamGrid() {
                       viewport={{ once: true }}
                     >
                       <Card 
-                        className="cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-0 shadow-md bg-white overflow-hidden group w-64"
+                        className="cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-0 shadow-md bg-white overflow-hidden group w-64 h-80 relative py-0"
                         onClick={() => setSelectedMember(member)}
                       >
-                        <CardContent className="p-0">
-                          {/* Profile Image */}
-                          <div className="relative h-48 bg-gradient-to-br from-red-50 to-red-100">
-                            <Image 
-                              src={member.image_url} 
-                              alt={member.name}
-                              width={300}
-                              height={300}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            />
-                          </div>
+                        <CardContent className="p-0 h-full relative">
+                          {/* Profile Image - Full Card */}
+                          <Image 
+                            src={member.image_url} 
+                            alt={member.name}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
                           
-                          {/* Content */}
-                          <div className="p-4">
-                            <h4 className="font-bold text-slate-900 mb-1 text-sm leading-tight">
+                          {/* Content Overlay */}
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+                            <h4 className="font-bold text-white mb-1 text-sm leading-tight">
                               {member.name}
                             </h4>
-                            <p className="text-red-600 font-semibold text-xs mb-2">
+                            <p className="text-red-300 font-semibold text-xs mb-2">
                               {member.position}
                             </p>
-                            <p className="text-slate-600 text-xs leading-relaxed">
+                            <p className="text-white/90 text-xs leading-relaxed">
                               {member.specialization}
                             </p>
                           </div>
@@ -219,25 +216,13 @@ export default function TeamGrid() {
                   {/* Contact Info */}
                   <div>
                     <h4 className="font-semibold text-slate-900 mb-3">Kontak</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                      {selectedMember.email && (
-                        <div className="flex items-center space-x-2 p-3 bg-slate-50 rounded-lg">
-                          <Mail className="h-4 w-4 text-slate-500" />
-                          <span className="text-slate-600">{selectedMember.email}</span>
-                        </div>
-                      )}
-                      {selectedMember.phone && (
-                        <div className="flex items-center space-x-2 p-3 bg-slate-50 rounded-lg">
-                          <Phone className="h-4 w-4 text-slate-500" />
-                          <span className="text-slate-600">{selectedMember.phone}</span>
-                        </div>
-                      )}
-                      {selectedMember.office && (
-                        <div className="flex items-center space-x-2 p-3 bg-slate-50 rounded-lg">
-                          <MapPin className="h-4 w-4 text-slate-500" />
-                          <span className="text-slate-600">{selectedMember.office}</span>
-                        </div>
-                      )}
+                    <div className='grid grid-cols-7 text-sm'>
+                      <div className='col-span-1'>Email</div>
+                      <div className='col-span-6'>: <span className="text-slate-600">{selectedMember.email}</span></div>
+                      <div className='col-span-1'>No. HP</div>
+                      <div className='col-span-6'>: <span className="text-slate-600">{selectedMember.phone}</span></div>
+                      <div className='col-span-1'>Kantor</div>
+                      <div className='col-span-6'>: <span className="text-slate-600">{selectedMember.office}</span></div>
                     </div>
                   </div>
 
