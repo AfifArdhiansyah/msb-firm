@@ -1,6 +1,6 @@
 'use client';
 
-import Header from './header';
+import ResizableHeader from './resizable-header';
 import Footer from './footer';
 import ScrollToTop from '@/components/ui/scroll-to-top';
 
@@ -11,8 +11,8 @@ export default function MainLayout({
 }) {
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-1">
+      <ResizableHeader />
+      <main className="flex-1 pt-20">
         {children}
       </main>
       <Footer />
