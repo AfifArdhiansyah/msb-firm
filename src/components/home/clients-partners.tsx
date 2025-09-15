@@ -29,15 +29,39 @@ export default function ClientsPartners() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
+          className="space-y-8"
         >
+          {/* First row - Left to Right */}
           <div className="relative">
             <div className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 h-16 w-12 sm:w-24 bg-gradient-to-r from-white to-transparent z-10" />
             <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 h-16 w-12 sm:w-24 bg-gradient-to-l from-white to-transparent z-10" />
 
             <div className="marquee-viewport overflow-hidden">
-              <div className="marquee-track">
+              <div className="marquee-track marquee-left-to-right">
                 {[...partnerLogos, ...partnerLogos].map((logo, idx) => (
-                  <div key={`${logo.alt}-${idx}`} className="mx-6 flex items-center justify-center">
+                  <div key={`row1-${logo.alt}-${idx}`} className="mx-6 flex items-center justify-center">
+                    <Image
+                      src={logo.src}
+                      alt={logo.alt}
+                      width={112}
+                      height={32}
+                      className="opacity-70 hover:opacity-100 transition grayscale hover:grayscale-0"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Second row - Right to Left */}
+          <div className="relative">
+            <div className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 h-16 w-12 sm:w-24 bg-gradient-to-r from-white to-transparent z-10" />
+            <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 h-16 w-12 sm:w-24 bg-gradient-to-l from-white to-transparent z-10" />
+
+            <div className="marquee-viewport overflow-hidden">
+              <div className="marquee-track marquee-right-to-left">
+                {[...partnerLogos, ...partnerLogos].map((logo, idx) => (
+                  <div key={`row2-${logo.alt}-${idx}`} className="mx-6 flex items-center justify-center">
                     <Image
                       src={logo.src}
                       alt={logo.alt}
@@ -61,12 +85,23 @@ export default function ClientsPartners() {
               align-items: center;
               gap: 3rem;
               width: max-content;
-              animation: marquee 25s linear infinite;
             }
-            .marquee-track:hover { animation-play-state: paused; }
-            @keyframes marquee {
+            .marquee-left-to-right {
+              animation: marquee-ltr 25s linear infinite;
+            }
+            .marquee-right-to-left {
+              animation: marquee-rtl 25s linear infinite;
+            }
+            .marquee-track:hover { 
+              animation-play-state: paused; 
+            }
+            @keyframes marquee-ltr {
               0% { transform: translateX(0); }
               100% { transform: translateX(-50%); }
+            }
+            @keyframes marquee-rtl {
+              0% { transform: translateX(-50%); }
+              100% { transform: translateX(0); }
             }
           `}</style>
         </motion.div>
