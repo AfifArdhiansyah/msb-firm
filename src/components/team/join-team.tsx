@@ -292,7 +292,7 @@ export default function JoinTeam() {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-white text-white hover:bg-white hover:text-red-600"
+                className="border-white text-white hover:bg-white hover:text-red-600 bg-red-700"
               >
                 <Mail className="h-4 w-4 mr-2" />
                 Hubungi HR
