@@ -206,7 +206,7 @@ export default function FirmInfoPage() {
                 <Input
                   id="whatsapp_number"
                   {...register('whatsapp_number')}
-                  placeholder="+62812-3456-7890"
+                  placeholder="+62812-7251-9788"
                 />
               </div>
               

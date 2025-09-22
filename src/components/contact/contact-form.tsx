@@ -104,7 +104,7 @@ export default function ContactForm() {
                       type="tel"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="Contoh: +62812-3456-7890"
+                      placeholder="Contoh: +62812-7251-9788"
                       className="h-12"
                     />
                   </div>

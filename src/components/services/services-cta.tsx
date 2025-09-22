@@ -55,7 +55,7 @@ export default function ServicesCTA() {
               <Card className="border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-6">
                   <a
-                    href={`https://wa.me/${firmInfo.whatsapp_number?.replace(/[^0-9]/g, '')}`}
+                    href={`https://wa.me/${firmInfo.whatsapp_number?.replace(/[^0-9]/g, '')}?text=Halo%20saya%20ingin%20bertanya%20mengenai%20layanan%20hukum%20di%20MSB%20and%20Partners`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center space-x-4 group"
@@ -180,7 +180,7 @@ export default function ServicesCTA() {
                       className="border-green-500 text-green-600 hover:bg-green-50"
                     >
                       <a
-                        href={`https://wa.me/${firmInfo.whatsapp_number?.replace(/[^0-9]/g, '')}`}
+                        href={`https://wa.me/${firmInfo.whatsapp_number?.replace(/[^0-9]/g, '')}?text=Halo%20saya%20ingin%20bertanya%20mengenai%20layanan%20hukum%20di%20MSB%20and%20Partners`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >

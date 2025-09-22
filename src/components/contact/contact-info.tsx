@@ -28,7 +28,7 @@ const contactMethods = [
     title: 'WhatsApp',
     value: firmInfo.whatsapp_number,
     description: 'Respons cepat dalam 5 menit',
-    action: `https://wa.me/${firmInfo.whatsapp_number?.replace(/[^0-9]/g, '')}`,
+    action: `https://wa.me/${firmInfo.whatsapp_number?.replace(/[^0-9]/g, '')}?text=Halo%20saya%20ingin%20bertanya%20mengenai%20layanan%20hukum%20di%20MSB%20and%20Partners`,
     color: 'bg-green-500'
   },
   {
