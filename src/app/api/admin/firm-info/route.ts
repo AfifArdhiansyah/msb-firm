@@ -12,7 +12,7 @@ async function getFirmInfo(): Promise<FirmInfo> {
     logo_url: '/msb.png',
     mission: 'Memberikan layanan hukum berkualitas tinggi dengan pendekatan personal dan profesional untuk melindungi hak dan kepentingan klien.',
     vision: 'Menjadi firma hukum terdepan yang dipercaya dalam memberikan solusi hukum inovatif dan komprehensif.',
-    whatsapp_number: '+62812-3456-7890',
+    whatsapp_number: '+62812-7251-9788',
     email: 'info@hukumprima.com',
     phone: '+62-21-1234-5678',
     address: 'Jl. Sudirman No. 123, Jakarta Pusat 10220, Indonesia',

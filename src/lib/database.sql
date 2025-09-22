@@ -99,7 +99,7 @@ INSERT INTO firm_info (
     'Solusi Hukum Terpercaya untuk Kebutuhan Anda',
     'Memberikan layanan hukum berkualitas tinggi dengan pendekatan personal dan profesional untuk melindungi hak dan kepentingan klien.',
     'Menjadi firma hukum terdepan yang dipercaya dalam memberikan solusi hukum inovatif dan komprehensif.',
-    '+62812-3456-7890',
+    '+62812-7251-9788',
     'info@hukumprima.com',
     '+62-21-1234-5678',
     'Jl. Sudirman No. 123, Jakarta Pusat 10220, Indonesia',
