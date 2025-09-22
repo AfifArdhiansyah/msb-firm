@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Award, Users, Building } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Timeline } from '@/components/ui/timeline';
 
 const milestones = [
   {
@@ -55,7 +56,7 @@ export default function FirmHistory() {
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        <motion.div
+      <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -71,56 +72,23 @@ export default function FirmHistory() {
           </p>
         </motion.div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="relative">
-            {/* Timeline Line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-0.5 bg-slate-200 hidden md:block"></div>
-            
-            <div className="space-y-8">
-              {milestones.map((milestone, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className={`relative flex items-center ${
-                    index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                  }`}
-                >
-                  {/* Timeline Dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-red-700 rounded-full border-4 border-white shadow-lg z-10 hidden md:block"></div>
-                  
-                  {/* Content */}
-                  <div className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pr-16' : 'md:pl-16'}`}>
-                    <Card className="hover:shadow-lg transition-shadow duration-300">
-                      <CardContent className="p-6">
-                        <div className="flex items-start space-x-4">
-                          <div className={`w-12 h-12 ${milestone.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                            <milestone.icon className="h-6 w-6 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-2 mb-2">
-                              <Badge variant="outline" className="text-red-600 border-red-600">
-                                {milestone.year}
-                              </Badge>
-                            </div>
-                            <h3 className="text-xl font-semibold text-slate-900 mb-2">
-                              {milestone.title}
-                            </h3>
-                            <p className="text-slate-600 leading-relaxed">
-                              {milestone.description}
-                            </p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+        <div className="max-w-5xl mx-auto">
+            <Timeline
+              hideHeader={true}
+              data={milestones.map((milestone) => ({
+                title: `${milestone.year} — ${milestone.title}`,
+                icon: (
+                  <div className={`w-12 h-12 ${milestone.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                    <milestone.icon className="h-6 w-6 text-white" />
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+                ),
+                description: milestone.description,
+                content: milestone.description,
+              }))}
+            />
         </div>
+
+        
 
         {/* Statistics */}
         <motion.div
@@ -158,3 +126,4 @@ export default function FirmHistory() {
     </section>
   );
 }
+
