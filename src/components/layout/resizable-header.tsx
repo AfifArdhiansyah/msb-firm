@@ -20,10 +20,15 @@ import {
 
 const navigation = [
   { name: 'Beranda', link: '/' },
-  { name: 'Tentang Kami', link: '/tentang' },
+  { name: 'Tentang', link: '/tentang' },
   { name: 'Layanan', link: '/layanan' },
-  { name: 'Tim', link: '/tim' },
+  { name: 'Portofolio', link: '/portofolio' },
+  { name: 'Blog', link: '/berita' },
+  { name: 'Timeline', link: '/timeline' },
   { name: 'Kontak', link: '/kontak' },
+  { name: 'Rekanan', link: '/rekanan' },
+  { name: 'Press Release', link: '/press-release' },
+  { name: 'Galeri', link: '/galeri' },
 ];
 
 const MSBLogo = ({ className }: { className?: string }) => {
