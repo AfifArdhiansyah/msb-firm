@@ -67,14 +67,15 @@ export const Navbar = ({ children, className }: NavbarProps) => {
       ref={ref}
       className={cn("w-full", className)}
     >
-      {React.Children.map(children, (child) =>
-        React.isValidElement(child)
-          ? React.cloneElement(
-              child as React.ReactElement<{ visible?: boolean }>,
-              { visible },
-            )
-          : child,
-      )}
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child) && typeof child.type !== 'string') {
+          return React.cloneElement(
+            child as React.ReactElement<{ visible?: boolean }>,
+            { visible },
+          );
+        }
+        return child;
+      })}
     </motion.div>
   );
 };
@@ -87,7 +88,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
-        width: visible ? "60%" : "100%",
+        width: visible ? "80%" : "100%",
         y: visible ? 20 : 0,
       }}
       transition={{
@@ -95,28 +96,40 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         stiffness: 200,
         damping: 50,
       }}
-      style={{
-        minWidth: "1000px",
-      }}
       className={cn(
-        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full px-6 py-2 lg:flex",
-        visible ? "bg-white/90 dark:bg-neutral-950/90" : "bg-white/20 dark:bg-neutral-950/20",
+        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full py-2 lg:flex",
+        visible ? "bg-white/90 dark:bg-neutral-950/90 px-4" : "bg-white/20 dark:bg-neutral-950/20 px-6",
         className,
       )}
+      style={{
+        minWidth: visible ? "1100px" : "1000px",
+      } as React.CSSProperties}
     >
-      {children}
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child) && typeof child.type !== 'string') {
+          return React.cloneElement(
+            child as React.ReactElement<{ visible?: boolean }>,
+            { visible },
+          );
+        }
+        return child;
+      })}
     </motion.div>
   );
 };
 
-export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
+export const NavItems = ({ items, className, onItemClick, visible }: NavItemsProps & { visible?: boolean }) => {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
     <motion.div
       onMouseLeave={() => setHovered(null)}
+      animate={{
+        gap: visible ? "0.25rem" : "0.75rem",
+      }}
       className={cn(
-        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-4 text-sm font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-4",
+        "hidden flex-1 flex-row items-center justify-center font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex",
+        visible ? "text-sm" : "text-sm",
         className,
       )}
     >
@@ -124,7 +137,10 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         <a
           onMouseEnter={() => setHovered(idx)}
           onClick={onItemClick}
-          className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
+          className={cn(
+            "relative py-2 text-neutral-600 dark:text-neutral-300 whitespace-nowrap",
+            visible ? "px-2" : "px-3"
+          )}
           key={`link-${idx}`}
           href={item.link}
         >
